@@ -1,0 +1,101 @@
+{
+  "name": "libai-canvas",
+  "private": true,
+  "version": "0.19.7",
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5177",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5177",
+    "backend:dev": "node scripts/backend-dev.mjs",
+    "backend:check": "python -m py_compile backend/app.py",
+    "backend:package": "powershell -ExecutionPolicy Bypass -File scripts/build-backend-win.ps1",
+    "backend:package:mac": "bash scripts/build-backend-mac.sh",
+    "ffmpeg:prepare": "node scripts/prepare-ffmpeg.mjs",
+    "ffmpeg:check": "node scripts/check-ffmpeg.mjs",
+    "icon:mac": "bash scripts/create-mac-icon.sh",
+    "desktop:dev": "node scripts/desktop-dev.mjs",
+    "desktop:build": "powershell -ExecutionPolicy Bypass -File scripts/package-win.ps1",
+    "desktop:build:mac": "bash scripts/package-mac.sh",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui"
+  },
+  "dependencies": {
+    "electron-updater": "^6.8.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.182.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/ui": "^2.1.9",
+    "electron": "^41.3.0",
+    "electron-builder": "^26.8.1",
+    "ffmpeg-static": "^5.3.0",
+    "ffprobe-static": "^3.1.0",
+    "jsdom": "^25.0.1",
+    "vite": "^5.4.21",
+    "vitest": "^2.1.9"
+  },
+  "build": {
+    "appId": "com.manchuang.libai",
+    "productName": "漫创AI",
+    "artifactName": "libai-canvas-setup-${version}.${ext}",
+    "icon": "assets/app-icon.ico",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "backend/**/*",
+      "assets/app-icon.ico",
+      "assets/app-icon.icns",
+      "assets/app-icon-source.png",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "tools/ffmpeg",
+        "to": "tools/ffmpeg"
+      },
+      {
+        "from": "build/backend",
+        "to": "backend"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/app-icon.ico",
+      "verifyUpdateCodeSignature": false
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "assets/app-icon.icns",
+      "category": "public.app-category.productivity"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "漫创AI",
+      "installerIcon": "assets/app-icon.ico",
+      "uninstallerIcon": "assets/app-icon.ico",
+      "unicode": true
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "kjj87552-rgb",
+        "repo": "222"
+      }
+    ]
+  }
+}

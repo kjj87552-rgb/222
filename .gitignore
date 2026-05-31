@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+build.out
+build.err
+vite-dev.log
+vite-dev.err.log
+electron-dev.log
+__pycache__/
+*.pyc
+coverage/
+.vitest-cache/
