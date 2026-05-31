@@ -400,7 +400,7 @@ describe('electron auto update integration', () => {
     ]);
   });
 
-  it('falls back to the Rainyun releases manifest when GitHub history is unavailable by default', async () => {
+  it('falls back to the Rainyun releases manifest when GitHub history is unavailable on Windows', async () => {
     const { fetchUpdateHistory } = require('../../electron/autoUpdate.cjs');
     const fetchImpl = vi.fn()
       .mockResolvedValueOnce({
@@ -439,7 +439,7 @@ describe('electron auto update integration', () => {
         }),
       });
 
-    await expect(fetchUpdateHistory({ fetchImpl })).resolves.toEqual({
+    await expect(fetchUpdateHistory({ fetchImpl, platform: 'win32' })).resolves.toEqual({
       ok: true,
       source: 'rainyun',
       releases: [
@@ -546,6 +546,7 @@ describe('electron auto update integration', () => {
     await expect(fetchUpdateHistory({
       fetchImpl,
       source: 'github',
+      platform: 'win32',
     })).resolves.toEqual({
       ok: true,
       source: 'github',
@@ -655,6 +656,7 @@ describe('electron auto update integration', () => {
     await expect(fetchUpdateHistory({
       fetchImpl,
       source: 'github',
+      platform: 'win32',
     })).resolves.toEqual({
       ok: true,
       source: 'github',
