@@ -18,6 +18,7 @@
     "desktop:dev": "node scripts/desktop-dev.mjs",
     "desktop:build": "powershell -ExecutionPolicy Bypass -File scripts/package-win.ps1",
     "desktop:build:mac": "bash scripts/package-mac.sh",
+    "desktop:verify:mac": "bash scripts/verify-mac-package.sh",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui"

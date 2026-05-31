@@ -36,8 +36,14 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: Run macOS packaging tests
+        run: npm run test -- tests/electron/platformResources.test.js tests/electron/macosPackaging.test.js tests/electron/ffmpegPackaging.test.js tests/electron/autoUpdate.test.js
+
       - name: Build unsigned macOS package
         run: npm run desktop:build:mac
+
+      - name: Verify macOS package
+        run: npm run desktop:verify:mac
 
       - name: Upload macOS package artifacts
         uses: actions/upload-artifact@v4
